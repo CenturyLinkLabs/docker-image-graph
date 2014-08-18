@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', { packages: ['orgchart'] });
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var jsonData = $.ajax({
+          url: "/images.json",
+          dataType:"json",
+          async: false
+        }).responseJSON;
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'ID');
+        data.addColumn('string', 'Parent');
+        data.addColumn('string', 'ToolTip');
+        data.addRows(jsonData);
+
+        var chart = new google.visualization.OrgChart(document.getElementById('chart'));
+        chart.draw(data, {
+          allowHtml:true,
+          allowCollapse: true,
+          nodeClass: 'layer',
+          size: 'small'
+        });
+      }
+    </script>
+
+    <style>
+      body {
+        background: url(texture-noise.png);
+      }
+
+      header {
+        font-family: "Helvetica Neue", Helvetica;
+        font-size: 36px;
+        font-weight: 300;
+        text-shadow: 0 1px 0 #fff;
+        margin: 10px 10px;
+      }
+
+      header .hint {
+        font-size: 12px;
+        color: #999;
+      }
+
+      .layer {
+        text-align: center;
+        vertical-align: middle;
+        font-family: "Helvetica Neue", Helvetica;
+        border: 2px solid #b5d9ea;
+        -webkit-border-radius: 5px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;
+        background-color: #edf7ff;
+        -webkit-gradient(linear, left top, left bottom, from(#edf7ff), to(#cde7ee))
+      }
+
+      .tags {
+        display: block;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      Docker Image Cache
+      <div class="hint">Double-click on node to collapse/expand</div>
+    </header>
+
+    <div id='chart'></div>
+  </body>
+</html>

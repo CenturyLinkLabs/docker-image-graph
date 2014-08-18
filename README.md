@@ -8,20 +8,26 @@ generates a PNG image showing the relationship of the various layers.
 ### Usage
 
 The Ruby *image-graph* script is itself packaged as a Docker image so it can
-easily be executed with the Docker *run* command:
+easily be executed with the Docker *run* command.
+
+Since the script interacts with the Docker API in order to inspect your local
+image cache it needs access to the Docker API socket. When starting the container, the `-v` flag needs to be used to make the Docker socket available inside the container.
+
+By default, when the container is started it will generate a PNG that is streamed to `stdout`:
 
     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
       centurylink/image-graph > docker_images.png
 
-Since the script interacts with the Docker API in order to inspect your local
-image cache it needs access to the Docker API socket. The `-v` flag shown above
-makes the Docker socket available inside the container running the script.
+You'll need to redirect the container's output to a file in order to save/view the generated image. The name of the output file does not matter, but it is recommended that you use a `.png` extension so that your image viewer will properly recognize the format of the file.
 
-The PNG that is generated is streamed to `stdout` so you'll need to redirect
-the container's output to a file in order to save/view the generated image. The
-name of the output file does not matter, but it is recommended that you use a
-`.png` extension so that your image viewer will properly recognize the format of
-the file.
+If you supply an environment variabled named *PORT* using the `-e` flag the container will spin-up a web server on the designated port that hosts a web-based version of the image graph:
+
+    docker run -d -v /var/run/docker.sock:/var/run/docker.sock \
+      -e PORT=3000 -p 3000:3000 centurylink/image-graph 
+      
+In the example above, the web server will be started on port 3000. When using this option you'll also want to use the `-p` flag to map the container port to a port on the host so that you can access the server from outside the container. The container port you specify with the `-p` flag should match the value you specified for the *PORT* environment variable.
+
+When a value for the *PORT* envrionment variable is provided, the PNG version of the image is **not** streamed to `stdout`. 
 
 ### Example
 
