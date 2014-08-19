@@ -3,10 +3,9 @@
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type='text/javascript'>
-      google.load('visualization', '1', { packages: ['orgchart'] });
-      google.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+      var timer;
+      var drawChart = function() {
 
         var jsonData = $.ajax({
           url: "/images.json",
@@ -27,7 +26,13 @@
           nodeClass: 'layer',
           size: 'small'
         });
-      }
+
+        clearTimeout(timer);
+        timer = setTimeout(drawChart, 1000);
+      };
+
+      google.load('visualization', '1', { packages: ['orgchart'] });
+      google.setOnLoadCallback(drawChart);
     </script>
 
     <style>

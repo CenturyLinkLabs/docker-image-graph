@@ -49,5 +49,7 @@ class Docker::Image
     end
 
     cmd
+  rescue => ex
+    ''
   end
 end
