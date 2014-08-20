@@ -7,7 +7,7 @@ RUN gem install docker-api sinatra
 
 ADD . /usr/src/app/
 WORKDIR /usr/src/app
-RUN chmod +x image-graph-cmd.rb image-graph-web.rb image-graph.sh
+RUN chmod +x image-graph.sh
 
 CMD [""]
 ENTRYPOINT ["./image-graph.sh"]
