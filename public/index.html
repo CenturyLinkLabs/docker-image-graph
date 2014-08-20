@@ -4,7 +4,28 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type='text/javascript'>
 
-      var timer;
+      var timer, chart;
+
+      var init = function() {
+        chart = new google.visualization.OrgChart(document.getElementById('chart'));
+        google.visualization.events.addListener(chart, 'collapse', onCollapse);
+        onTimeout();
+      }
+
+      var onTimeout = function() {
+        clearTimeout(timer);
+        drawChart();
+        timer = setTimeout(onTimeout, 1000);
+      }
+
+      var onCollapse = function() {
+        clearTimeout(timer);
+
+        if (chart.getCollapsedNodes().length == 0) {
+          timer = setTimeout(onTimeout, 1000);
+        }
+      }
+
       var drawChart = function() {
 
         var jsonData = $.ajax({
@@ -19,7 +40,6 @@
         data.addColumn('string', 'ToolTip');
         data.addRows(jsonData);
 
-        var chart = new google.visualization.OrgChart(document.getElementById('chart'));
         chart.draw(data, {
           allowHtml:true,
           allowCollapse: true,
@@ -27,12 +47,10 @@
           size: 'small'
         });
 
-        clearTimeout(timer);
-        timer = setTimeout(drawChart, 1000);
       };
 
       google.load('visualization', '1', { packages: ['orgchart'] });
-      google.setOnLoadCallback(drawChart);
+      google.setOnLoadCallback(init);
     </script>
 
     <style>
