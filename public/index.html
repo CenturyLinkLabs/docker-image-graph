@@ -4,25 +4,56 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type='text/javascript'>
 
-      var timer, chart;
+      var timer, chart, data;
 
       var init = function() {
         chart = new google.visualization.OrgChart(document.getElementById('chart'));
         google.visualization.events.addListener(chart, 'collapse', onCollapse);
+        google.visualization.events.addListener(chart, 'select', onSelect);
+        $('body').keypress(onKeyPress);
         onTimeout();
       }
 
       var onTimeout = function() {
         clearTimeout(timer);
         drawChart();
-        timer = setTimeout(onTimeout, 1000);
-      }
+        restartTimer();
+      };
 
       var onCollapse = function() {
         clearTimeout(timer);
 
         if (chart.getCollapsedNodes().length == 0) {
-          timer = setTimeout(onTimeout, 1000);
+          restartTimer();
+        }
+      };
+
+      var onSelect = function(e) {
+        clearTimeout(timer);
+
+        if (chart.getSelection().length == 0) {
+          restartTimer();
+        }
+      };
+
+      var onKeyPress = function(e) {
+        if (e.keyCode == 120) {
+          var rows = chart.getSelection();
+
+          if (rows.length > 0) {
+            var image_id = data.getValue(rows[0].row, 0);
+
+            $.ajax({
+              url: "/images/" + image_id + ".json",
+              type: "DELETE",
+              dataType: "json"
+            }).done(function(e) {
+              if (!e) {
+                alert("Layer could not be deleted");
+              }
+              restartTimer();
+            });
+          }
         }
       }
 
@@ -34,7 +65,7 @@
           async: false
         }).responseJSON;
 
-        var data = new google.visualization.DataTable();
+        data = new google.visualization.DataTable();
         data.addColumn('string', 'ID');
         data.addColumn('string', 'Parent');
         data.addColumn('string', 'ToolTip');
@@ -47,6 +78,10 @@
           size: 'small'
         });
 
+      };
+
+      var restartTimer = function() {
+        timer = setTimeout(onTimeout, 1000);
       };
 
       google.load('visualization', '1', { packages: ['orgchart'] });
@@ -74,7 +109,7 @@
       .layer {
         text-align: center;
         vertical-align: middle;
-        font-family: "Helvetica Neue", Helvetica;
+        font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
         border: 2px solid #b5d9ea;
         -webkit-border-radius: 5px;
         -webkit-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;
@@ -83,8 +118,10 @@
       }
 
       .tags {
+        font-family: "Helvetica Neue", Helvetica;
         display: block;
         font-weight: bold;
+        margin-top: 3px;
       }
     </style>
   </head>
@@ -92,7 +129,8 @@
   <body>
     <header>
       Docker Image Cache
-      <div class="hint">Double-click on node to collapse/expand</div>
+      <div class="hint">- Double-click on node to collapse/expand</div>
+      <div class="hint">- Select node and press 'x' to delete</div>
     </header>
 
     <div id='chart'></div>

@@ -11,13 +11,22 @@ end
 get '/images.json' do
 
   Docker::Image.all(all: 1).map do |image|
-
-    label = "#{image.short_id}<span class=\"tags\">#{image.tags}</span>"
+    label = "#{image.short_id} &mdash; #{image.size} MB<span class=\"tags\">#{image.tags}</span>"
 
     [ { v: image.id, f: label }, image.parent_id, image.cmd, ]
   end.to_json
 end
 
+delete '/images/:image_id.json' do
+  image = Docker::Image.get(params['image_id'])
+
+  begin
+    image.remove()
+    "true"
+  rescue => ex
+    "false"
+  end
+end
 
 class Docker::Image
 
@@ -29,6 +38,10 @@ class Docker::Image
 
   def parent_id
     info['ParentId']
+  end
+
+  def size
+    info['VirtualSize'] / 1024 / 1024
   end
 
   def tags
