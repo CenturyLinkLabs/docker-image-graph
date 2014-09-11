@@ -10,11 +10,30 @@ end
 
 get '/images.json' do
 
-  Docker::Image.all(all: 1).map do |image|
-    label = "#{image.short_id} &mdash; #{image.size} MB<span class=\"tags\">#{image.tags}</span>"
+  images = Docker::Image.all(all: 1)
 
-    [ { v: image.id, f: label }, image.parent_id, image.cmd, ]
-  end.to_json
+  nodes = images.each_with_object({}) do |image, memo|
+    memo[image.id] = {
+        id: image.id,
+        name: image.id[0..11],
+        parent_id: image.info['ParentId'],
+        size: image.size,
+        command: image.cmd,
+        tag: image.tags,
+        children: []
+    }
+  end
+
+  nodes.each do |_, node|
+    next if node[:parent_id] == ''
+    nodes[node[:parent_id]][:children] << node
+  end
+
+  root = nodes.find do |_, node|
+    node[:parent_id] == ''
+  end
+
+  root[1].to_json
 end
 
 delete '/images/:image_id.json' do

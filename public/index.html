@@ -1,138 +1,47 @@
-<html>
-  <head>
-    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type='text/javascript'>
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <title>graph d3</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
 
-      var timer, chart, data;
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body>
 
-      var init = function() {
-        chart = new google.visualization.OrgChart(document.getElementById('chart'));
-        google.visualization.events.addListener(chart, 'collapse', onCollapse);
-        google.visualization.events.addListener(chart, 'select', onSelect);
-        $('body').keypress(onKeyPress);
-        onTimeout();
-      }
+<header>
+  <h1>Image Graph</h1>
+</header>
+<cite class="built-by">
+  <h2>Century Link</h2>
+</cite>
+<main class="container">
 
-      var onTimeout = function() {
-        clearTimeout(timer);
-        drawChart();
-        restartTimer();
-      };
+</main>
 
-      var onCollapse = function() {
-        clearTimeout(timer);
+<div class="background">
+  <img src="images/marketing_bg_body.svg"/>
+</div>
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="scripts/vendor/jquery/jquery.min.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+<script src="scripts/vendor/d3/d3.min.js"></script>
 
-        if (chart.getCollapsedNodes().length == 0) {
-          restartTimer();
-        }
-      };
 
-      var onSelect = function(e) {
-        clearTimeout(timer);
-
-        if (chart.getSelection().length == 0) {
-          restartTimer();
-        }
-      };
-
-      var onKeyPress = function(e) {
-        if (e.keyCode == 120) {
-          var rows = chart.getSelection();
-
-          if (rows.length > 0) {
-            var image_id = data.getValue(rows[0].row, 0);
-
-            $.ajax({
-              url: "/images/" + image_id + ".json",
-              type: "DELETE",
-              dataType: "json"
-            }).done(function(e) {
-              if (!e) {
-                alert("Layer could not be deleted");
-              }
-              restartTimer();
-            });
-          }
-        }
-      }
-
-      var drawChart = function() {
-
-        var jsonData = $.ajax({
-          url: "/images.json",
-          dataType:"json",
-          async: false
-        }).responseJSON;
-
-        data = new google.visualization.DataTable();
-        data.addColumn('string', 'ID');
-        data.addColumn('string', 'Parent');
-        data.addColumn('string', 'ToolTip');
-        data.addRows(jsonData);
-
-        chart.draw(data, {
-          allowHtml:true,
-          allowCollapse: true,
-          nodeClass: 'layer',
-          size: 'small'
-        });
-
-      };
-
-      var restartTimer = function() {
-        timer = setTimeout(onTimeout, 1000);
-      };
-
-      google.load('visualization', '1', { packages: ['orgchart'] });
-      google.setOnLoadCallback(init);
-    </script>
-
-    <style>
-      body {
-        background: url(texture-noise.png);
-      }
-
-      header {
-        font-family: "Helvetica Neue", Helvetica;
-        font-size: 36px;
-        font-weight: 300;
-        text-shadow: 0 1px 0 #fff;
-        margin: 10px 10px;
-      }
-
-      header .hint {
-        font-size: 12px;
-        color: #999;
-      }
-
-      .layer {
-        text-align: center;
-        vertical-align: middle;
-        font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-        border: 2px solid #b5d9ea;
-        -webkit-border-radius: 5px;
-        -webkit-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;
-        background-color: #edf7ff;
-        -webkit-gradient(linear, left top, left bottom, from(#edf7ff), to(#cde7ee))
-      }
-
-      .tags {
-        font-family: "Helvetica Neue", Helvetica;
-        display: block;
-        font-weight: bold;
-        margin-top: 3px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      Docker Image Cache
-      <div class="hint">- Double-click on node to collapse/expand</div>
-      <div class="hint">- Select node and press 'x' to delete</div>
-    </header>
-
-    <div id='chart'></div>
-  </body>
+<!-- build:js({app,.tmp}) scripts/main.js -->
+<script src="scripts/graph_plugin.js"></script>
+<script src="scripts/main.js"></script>
+<!-- endbuild -->
+</body>
 </html>

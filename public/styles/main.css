@@ -1,0 +1,113 @@
+/* Space out content a bit */
+body {
+    padding-bottom: 20px;
+    background: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 100%; }
+
+.background {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 50px;
+    width: 100%;
+    opacity: .55; }
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.marketing,
+footer {
+    padding-left: 15px;
+    padding-right: 15px; }
+
+/* Custom page header */
+header {
+    overflow: hidden;
+    background: #8EC643;
+    /* Make the masthead heading the same height as the navigation */ }
+header h1 {
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 30px;
+    width: 200px;
+    padding: 10px 15px;
+    background: #777;
+    font-size: 2.0em; }
+
+cite.built-by {
+    display: block;
+    overflow: hidden;
+    background: #fff;
+    padding: 10px; }
+
+cite.built-by h2 {
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: 100%;
+    float: right;
+    height: 30px;
+    width: 145px;
+    background: url("../images/ctl_logo_base.svg") no-repeat;
+    background-size: 140px 30px;
+    background-position: center left; }
+
+/* Custom page footer */
+footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5; }
+
+.container-narrow > hr {
+    margin: 30px 0; }
+
+/* Main marketing message and sign up button */
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5; }
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px; }
+
+/* Supporting marketing content */
+.marketing {
+    margin: 40px 0; }
+.marketing p + h4 {
+    margin-top: 28px; }
+
+/* Stacked SVG layers */
+.node rect {
+    cursor: pointer;
+    fill: #fff;
+    fill-opacity: 0.9;
+    stroke: #3b5c10;
+    stroke-width: 1.5px; }
+
+.node text {
+    font: 13px sans-serif;
+    fill: #eee; }
+
+.node text:hover {
+    cursor: pointer; }
+
+path.link {
+    fill: none;
+    stroke: #274655;
+    stroke-width: 1.72px; }
+
+.node rect.hover {
+    fill: #8EC643; }
+
+.node rect.leaf {
+    fill: #527524; }
+
+.node rect.branch {
+    fill: #73a432; }
+
+.node rect.collapsed {
+    fill: #ed6323; }
+
+.node rect.command {
+    fill: #777; }
