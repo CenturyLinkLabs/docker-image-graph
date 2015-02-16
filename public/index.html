@@ -87,52 +87,39 @@
       google.load('visualization', '1', { packages: ['orgchart'] });
       google.setOnLoadCallback(init);
     </script>
-
-    <style>
-      body {
-        background: url(texture-noise.png);
-      }
-
-      header {
-        font-family: "Helvetica Neue", Helvetica;
-        font-size: 36px;
-        font-weight: 300;
-        text-shadow: 0 1px 0 #fff;
-        margin: 10px 10px;
-      }
-
-      header .hint {
-        font-size: 12px;
-        color: #999;
-      }
-
-      .layer {
-        text-align: center;
-        vertical-align: middle;
-        font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-        border: 2px solid #b5d9ea;
-        -webkit-border-radius: 5px;
-        -webkit-box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 3px;
-        background-color: #edf7ff;
-        -webkit-gradient(linear, left top, left bottom, from(#edf7ff), to(#cde7ee))
-      }
-
-      .tags {
-        font-family: "Helvetica Neue", Helvetica;
-        display: block;
-        font-weight: bold;
-        margin-top: 3px;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/stylesheets/main.css" type="text/css">
   </head>
 
   <body>
     <header>
-      Docker Image Cache
-      <div class="hint">- Double-click on node to collapse/expand</div>
-      <div class="hint">- Select node and press 'x' to delete</div>
+      <h1 class='logo'>
+        <a href="" title="Home">Panamax</a>
+      </h1>
+      <nav>
+        <ul>
+          <li class='docker-hub'><a href="http://registry.hub.docker.com" target="_blank">Docker Hub</a></li>
+          <li class='get-panamax'><a href="http://panamax.io/get-panamax">Get Panamax</a></li>
+          <li class='documentation'><a href="http://panamax.io/documentation/">Documentation &amp; Support</a></li>
+        </ul>
+      </nav>
+      <div id="social-icons">
+        <a href="https://github.com/CenturyLinkLabs/panamax-ui/wiki" target="_blank" title="Fork Us on GitHub" class="github"></a>
+        <a href="http://twitter.com/panamax_io" target="_blank" title="Follow Us on Twitter" class="twitter"></a>
+      </div>
     </header>
 
-    <div id='chart'></div>
+    <main>
+      <h2>
+        Docker Image Cache
+      </h2>
+      <small>- Double-click on node to collapse/expand</small>
+      <small>- Select node and press 'x' to delete</small>
+      <section id='chart'>
+      </section>
+    </main>
+    <footer>
+      <div class="logo"></div>
+      <small>&copy; 2015 CenturyLink - The ImageLayers project is provided under the Apache 2.0 license. All Rights Reserved.</small>
+    </footer>
   </body>
 </html>
