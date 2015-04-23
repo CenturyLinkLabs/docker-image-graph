@@ -1,13 +1,12 @@
-FROM centurylink/ruby-base:2.1.2
+FROM alpine:3.1
 
 MAINTAINER CenturyLink Labs <clt-labs-futuretech@centurylink.com>
+ENTRYPOINT ["/usr/src/app/image-graph.sh"]
+CMD [""]
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y graphviz
-RUN gem install docker-api sinatra
+RUN apk update && apk add ruby-dev graphviz ttf-ubuntu-font-family ca-certificates
+RUN gem install --no-rdoc --no-ri docker-api sinatra
+RUN dot -c
 
 ADD . /usr/src/app/
-WORKDIR /usr/src/app
-RUN chmod +x image-graph.sh
-
-CMD [""]
-ENTRYPOINT ["./image-graph.sh"]
+WORKDIR /usr/src/app/

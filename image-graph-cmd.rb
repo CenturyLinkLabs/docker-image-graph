@@ -1,4 +1,4 @@
-#! /usr/local/bin/ruby
+#! /usr/bin/ruby
 require 'open3'
 require 'docker'
 
@@ -24,9 +24,4 @@ end
 
 dot_file << 'base [style=invisible]'
 dot_file << '}'
-
-Open3.popen3('/usr/bin/dot -Tpng') do |stdin, stdout, stderr|
-  stdin.puts(dot_file.join("\n"))
-  stdin.close
-  STDOUT.write stdout.read
-end
+puts dot_file
