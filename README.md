@@ -1,3 +1,5 @@
+[![](https://badge.imagelayers.io/centurylink/image-graph.svg)](https://imagelayers.io/?images=centurylink/image-graph:latest 'Get your own badge on imagelayers.io')
+
 ## image-graph
 Generates a nice graph showing the hierarchy of Docker images in your local
 image cache.
