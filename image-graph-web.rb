@@ -59,6 +59,8 @@ class Docker::Image
       else
         cmd = "RUN #{cmd}".squeeze(' ')
       end
+    else
+      cmd = cmd.last
     end
 
     cmd
