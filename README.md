@@ -1,4 +1,4 @@
-[![Analytics](https://ga-beacon.appspot.com/UA-49491413-7/docker-image-graph/README.md)](https://github.com/CenturyLinkLabs/docker-image-graph)
+[![Analytics](https://ga-beacon.appspot.com/UA-49491413-7/docker-image-graph/README?pixel)](https://github.com/CenturyLinkLabs/docker-image-graph)
 [![](https://badge.imagelayers.io/centurylink/image-graph.svg)](https://imagelayers.io/?images=centurylink/image-graph:latest 'Get your own badge on imagelayers.io')
 
 
