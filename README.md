@@ -2,6 +2,10 @@
 [![](https://badge.imagelayers.io/centurylink/image-graph.svg)](https://imagelayers.io/?images=centurylink/image-graph:latest 'Get your own badge on imagelayers.io')
 
 
+## NOTE
+
+This repo is no longer being maintained. Users are welcome to fork it, but we make no warranty of its functionality.
+
 ## image-graph
 Generates a nice graph showing the hierarchy of Docker images in your local
 image cache.
