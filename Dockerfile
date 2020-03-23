@@ -5,7 +5,7 @@ ENTRYPOINT ["/usr/src/app/image-graph.sh"]
 CMD [""]
 
 RUN apk update && apk add ruby-dev graphviz ttf-ubuntu-font-family ca-certificates
-RUN gem install --no-rdoc --no-ri docker-api sinatra
+RUN gem install --no-rdoc --no-ri excon:'>=0.46.0' docker-api sinatra
 RUN dot -c
 
 ADD . /usr/src/app/
